@@ -1,12 +1,34 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 const Signup = () => {
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState("");
+
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/login");
+    try {
+      const res = await axios.post("http://localhost:5000/api/signup", {
+        name,
+        contact,
+        password,
+        confirmPassword,
+        otp,
+      });
+      console.log(res.data);
+      navigate("/login");
+    } catch (err) {
+      alert("Signup failed:", err.response?.data || err.message);
+    }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-100">
       <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
@@ -22,7 +44,10 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
 
@@ -33,7 +58,10 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Enter your email or phone"
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
 
@@ -44,7 +72,10 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
           <div>
@@ -54,18 +85,11 @@ const Signup = () => {
             <input
               type="password"
               placeholder="Confirm password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
-          </div>
-          <div>
-          <label className="block text-sm font-medium text-gray-700">
-              Role
-            </label>
-            <select className="w-full border rounded-lg p-2">
-              <option value="">Select Role</option>
-              <option value="farmer">Farmer</option>
-              <option value="buyer">Buyer</option>
-            </select>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -74,28 +98,24 @@ const Signup = () => {
             <input
               type="text"
               placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Location
-            </label>
-            <input
-              type="text"
-              placeholder="Enter Current Location"
-              className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-            />
-          </div>
-
           <button
             type="submit"
             className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition duration-200"
           >
             Sign Up
           </button>
-          <a href="/login" className="text-red-600 items-center justify-center flex">Already have an account? Login here</a>
-
+          <a
+            href="/login"
+            className="text-red-600 items-center justify-center flex"
+          >
+            Already have an account? Login here
+          </a>
         </form>
       </div>
     </div>
