@@ -1,10 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
+
+const [contact,setContact]=useState("");
+const [password,setPassword]=useState("");
+
 const navigate=useNavigate();
-const handleSubmit=(e)=>{
-    e.preventDefault;
-    navigate("/");
+
+
+const handleSubmit=async (e)=>{
+    e.preventDefault();
+    try{
+      const res=await axios.post("http://localhost:5000/api/login",{
+        contact,
+        password
+      })
+      console(res.data)
+      navigate("/");
+    }catch(err){
+      alert("Login failed",err.response?.data || err.message)
+    }
 }
   return (
     <div className="min-h-screen flex items-center justify-center bg-green-100">
@@ -21,6 +37,8 @@ const handleSubmit=(e)=>{
             <input
               type="text"
               placeholder="Enter your email or phone"
+              value={contact}
+              onChange={(e)=>setContact(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
@@ -32,6 +50,8 @@ const handleSubmit=(e)=>{
             <input
               type="password"
               placeholder="Enter password"
+              value={password}
+              onChange={(e)=>setPassword(e.target.value)}
               className="mt-1 w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
