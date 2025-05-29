@@ -1,5 +1,5 @@
 import { NavLink, Routes, Route } from "react-router-dom";
-import AddCrop from "./farmer/AddCrop";
+import AddCrop from "./Farmer/AddCrop";
 import DiseaseDetection from "./farmer/DiseaseDetection";
 import CropHistory from "./farmer/CropHistory";
 

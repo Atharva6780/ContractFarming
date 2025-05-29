@@ -9,6 +9,7 @@ import Footer from "./Components/Footer";
 import About from "./Pages/About";
 import FarmerDashboard from "./Pages/FarmerDashboard";
 import BuyerDashboard from "./Pages/BuyerDashboard";
+import AddCrop from "./Pages/Farmer/AddCrop";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
           <Route path="/farmer/dashboard/*" element={<FarmerDashboard />} />
+          <Route path="/farmer/dashboard/*add-crop" element={<AddCrop/>} />
           <Route path="/buyer/dashboard/*" element={<BuyerDashboard />} />
         </Routes>
         <Footer />
